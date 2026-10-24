@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff8f5">
+  <meta name="description" content="A little birthday surprise, made just for you.">
+  <title>A Birthday Surprise For You</title>
+  <style>
+    :root {
+      --bg: #fff9f6;
+      --paper: #ffffff;
+      --ink: #292522;
+      --muted: #766b68;
+      --rose: #d86f79;
+      --rose-dark: #b95061;
+      --rose-pale: #fce9e8;
+      --line: #f1dfdc;
+      --shadow: 0 18px 55px rgba(89, 52, 49, .10);
+      --serif: Georgia, "Times New Roman", serif;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background:
+        radial-gradient(circle at 8% 5%, rgba(248, 211, 207, .45), transparent 25rem),
+        radial-gradient(circle at 95% 90%, rgba(250, 225, 211, .40), transparent 24rem),
+        var(--bg);
+      color: var(--ink); font-family: var(--sans); min-height: 100vh;
+    }
+    button { font: inherit; }
+    .topbar {
+      width: min(1100px, calc(100% - 36px)); margin: 0 auto;
+      height: 78px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand { color: var(--ink); text-decoration: none; font-weight: 650; letter-spacing: -.03em; }
+    .brand span { color: var(--rose); }
+    .step-label { color: var(--muted); font-size: .82rem; }
+    main { width: min(960px, calc(100% - 32px)); margin: 0 auto; padding: 20px 0 70px; }
+    .screen { display: none; animation: appear .55s ease both; }
+    .screen.active { display: block; }
+    @keyframes appear { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .hero {
+      display: grid; grid-template-columns: 1fr .88fr; align-items: center; gap: clamp(28px, 6vw, 76px);
+      min-height: 560px;
+    }
+    .eyebrow { color: var(--rose-dark); text-transform: uppercase; letter-spacing: .18em; font-size: .72rem; font-weight: 750; }
+    h1, h2 { font-family: var(--serif); font-weight: 500; letter-spacing: -.045em; }
+    h1 { font-size: clamp(3.1rem, 7vw, 5.8rem); line-height: .98; margin: 20px 0 22px; }
+    h1 em { color: var(--rose); font-weight: 400; }
+    .intro { color: var(--muted); font-size: 1.06rem; line-height: 1.85; max-width: 440px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .btn {
+      border: 0; cursor: pointer; border-radius: 999px; padding: 14px 22px; font-weight: 650;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { color: white; background: var(--rose); box-shadow: 0 9px 22px rgba(216,111,121,.25); }
+    .btn-primary:hover { background: var(--rose-dark); }
+    .btn-quiet { color: var(--ink); background: #fff; border: 1px solid var(--line); }
+    .photo-frame {
+      position: relative; padding: 12px; background: white; border: 1px solid rgba(241,223,220,.9);
+      border-radius: 190px 190px 24px 24px; box-shadow: var(--shadow); transform: rotate(2deg);
+      max-width: 370px; justify-self: center; width: 100%;
+    }
+    .photo-frame::after { content: "♡"; position: absolute; right: -15px; bottom: 24px; color: var(--rose); background: white; border-radius: 50%; width: 52px; height: 52px; display: grid; place-items: center; font-size: 1.7rem; box-shadow: var(--shadow); }
+    .photo {
+      width: 100%; aspect-ratio: 4 / 5; object-fit: cover; display: block;
+      border-radius: 180px 180px 16px 16px; background: linear-gradient(145deg,#f9deda,#fff1e9);
+    }
+    .photo-placeholder {
+      width: 100%; aspect-ratio: 4 / 5; border-radius: 180px 180px 16px 16px;
+      background: linear-gradient(145deg, #f7dcd8, #fff2e9); display: grid; place-items: center; text-align: center;
+      padding: 25px; color: #9d6566;
+    }
+    .photo-placeholder .flower { font-size: 3rem; display: block; margin-bottom: 10px; }
+    .photo-placeholder small { display: block; line-height: 1.6; }
+    .section-head { text-align: center; padding: 36px 0 28px; }
+    h2 { font-size: clamp(2.4rem, 5vw, 4rem); line-height: 1.08; margin: 13px 0; }
+    .section-head p { color: var(--muted); line-height: 1.8; max-width: 570px; margin: 0 auto; }
+    .letter-card {
+      width: min(700px, 100%); margin: 10px auto 28px; padding: clamp(26px, 6vw, 56px);
+      background: rgba(255,255,255,.9); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow);
+      position: relative; overflow: hidden;
+    }
+    .letter-card::before { content: "♡"; position: absolute; right: 22px; top: 8px; font-size: 4rem; color: #fae5e2; }
+    .letter-card p { position: relative; color: #5f5552; font-size: 1.02rem; line-height: 2; white-space: pre-line; }
+    .letter-card .salutation { font-family: var(--serif); font-size: 1.6rem; color: var(--ink); }
+    .signature { color: var(--rose-dark) !important; font-family: var(--serif); font-style: italic; font-size: 1.25rem !important; }
+    .final-card {
+      text-align: center; width: min(760px,100%); margin: 20px auto; padding: clamp(30px, 7vw, 70px) 24px;
+      border-radius: 28px; background: linear-gradient(145deg,#fff,#fff1ef); border: 1px solid var(--line); box-shadow: var(--shadow);
+      overflow: hidden; position: relative;
+    }
+    .big-heart { font-size: 3rem; color: var(--rose); animation: heartbeat 1.7s ease-in-out infinite; display: inline-block; }
+    @keyframes heartbeat { 0%,100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+    .final-message { color: var(--muted); max-width: 540px; line-height: 1.9; margin: 18px auto 26px; }
+    .footer { text-align: center; color: #a49793; font-size: .8rem; padding: 24px 0 0; }
+    .progress { display: flex; gap: 7px; justify-content: center; margin: 6px 0 26px; }
+    .progress span { height: 4px; width: 32px; background: #eadbd8; border-radius: 20px; }
+    .progress span.on { background: var(--rose); }
+    .sparkle { position: fixed; pointer-events: none; z-index: 5; animation: floatUp 1.8s ease-out forwards; font-size: 18px; }
+    @keyframes floatUp { from { opacity: 0; transform: translateY(12px) scale(.7) rotate(0); } 20% { opacity: 1; } to { opacity: 0; transform: translateY(-100px) scale(1.2) rotate(20deg); } }
+    @media (max-width: 720px) {
+      .topbar { height: 68px; }
+      main { padding-top: 8px; }
+      .hero { grid-template-columns: 1fr; gap: 32px; min-height: auto; padding: 25px 0 20px; }
+      .hero-copy { text-align: center; }
+      .intro { margin-inline: auto; }
+      .actions { justify-content: center; }
+      .photo-frame { width: min(290px, 80%); grid-row: 1; }
+      h1 { font-size: clamp(3rem, 13vw, 4.4rem); }
+      .section-head { padding-top: 28px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Birthday surprise home">for you <span>♡</span></a>
+    <div class="step-label" id="stepLabel">A little birthday surprise</div>
+  </header>
+
+  <main>
+    <div class="progress" aria-label="Surprise progress">
+      <span class="on" id="dot1"></span><span id="dot2"></span><span id="dot3"></span>
+    </div>
+
+    <section class="screen active" id="screen1" aria-labelledby="mainTitle">
+      <div class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow">Made with care, just for you</div>
+          <h1 id="mainTitle">Happy Birthday,<br><em>Beautiful.</em></h1>
+          <p class="intro">Today is all about celebrating you. I made this little corner of the internet to share a few words and wish you a day as lovely as you are.</p>
+          <div class="actions">
+            <button class="btn btn-primary" onclick="goTo(2)">Open your surprise <span aria-hidden="true">→</span></button>
+          </div>
+        </div>
+
+        <div class="photo-frame">
+          <!-- PHOTO OPTION: Put her photo in the assets folder named her-photo.jpg, then replace this placeholder block with:
+          <img class="photo" src="assets/her-photo.jpg" alt="A favorite photo of you">
+          -->
+          <div class="photo-placeholder" role="img" aria-label="Photo placeholder">
+            <div><span class="flower">✿</span><strong>Your photo goes here</strong><small>Add her picture later<br>as assets/her-photo.jpg</small></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen2" aria-labelledby="letterTitle">
+      <div class="section-head">
+        <div class="eyebrow">A few words from the heart</div>
+        <h2 id="letterTitle">A little letter<br>for you.</h2>
+        <p>Not a big speech. Just a few honest words for someone who matters.</p>
+      </div>
+      <article class="letter-card">
+        <p class="salutation">Hey, beautiful,</p>
+        <p>Happy Birthday! I hope today brings you so many reasons to smile, moments that make you feel loved, and little surprises that stay in your heart.
+
+There are things about you that make you special in ways words can’t fully explain. I’m grateful that I got to know you, and I genuinely wish good things for you—not just today, but every day.
+
+May this new year of your life bring you peace, confidence, exciting opportunities, and the courage to follow every dream you carry. Keep being your wonderful self.</p>
+        <p class="signature">Wishing you all the happiness in the world. ♡</p>
+      </article>
+      <div class="actions" style="justify-content:center">
+        <button class="btn btn-quiet" onclick="goTo(1)">← Back</button>
+        <button class="btn btn-primary" onclick="goTo(3)">One last thing →</button>
+      </div>
+    </section>
+
+    <section class="screen" id="screen3" aria-labelledby="finalTitle">
+      <div class="section-head">
+        <div class="eyebrow">Before you go</div>
+        <h2 id="finalTitle">A wish for<br><em style="color:var(--rose);font-weight:400">your new year.</em></h2>
+      </div>
+      <div class="final-card">
+        <div class="big-heart" aria-hidden="true">♡</div>
+        <p class="final-message">I hope life gives you a thousand beautiful reasons to smile. May you feel proud of how far you come, find happiness in the little things, and always remember how much good you deserve.</p>
+        <h2 style="font-size:clamp(2rem,5vw,3.2rem);margin-bottom:12px">Happy Birthday! ✨</h2>
+        <p style="color:var(--muted);line-height:1.8">Keep shining, keep dreaming, and take good care of yourself.</p>
+        <div class="actions" style="justify-content:center">
+          <button class="btn btn-primary" onclick="sprinkleHearts()">A little more sparkle ✨</button>
+          <button class="btn btn-quiet" onclick="goTo(1)">Read it again</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">A small page, made with a lot of care. ♡</div>
+  </main>
+
+  <script>
+    const labels = {
+      1: "A little birthday surprise",
+      2: "A letter from the heart",
+      3: "One last wish"
+    };
+
+    function goTo(step) {
+      document.querySelectorAll(".screen").forEach((screen) => screen.classList.remove("active"));
+      document.getElementById("screen" + step).classList.add("active");
+      document.getElementById("stepLabel").textContent = labels[step];
+      [1,2,3].forEach((n) => document.getElementById("dot" + n).classList.toggle("on", n <= step));
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      if (step === 2) sprinkleHearts(5);
+      if (step === 3) sprinkleHearts(9);
+    }
+
+    function sprinkleHearts(count = 14) {
+      const symbols = ["♡", "✦", "✧", "♥"];
+      for (let i = 0; i < count; i++) {
+        const item = document.createElement("span");
+        item.className = "sparkle";
+        item.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        item.style.left = (8 + Math.random() * 84) + "vw";
+        item.style.top = (48 + Math.random() * 40) + "vh";
+        item.style.color = Math.random() > .5 ? "#d86f79" : "#d5a16f";
+        item.style.animationDelay = (Math.random() * .45) + "s";
+        document.body.appendChild(item);
+        setTimeout(() => item.remove(), 2300);
+      }
+    }
+  </script>
+</body>
+</html>
